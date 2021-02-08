@@ -1,0 +1,56 @@
+fields:
+    sender:
+        label: Sender
+        nameFrom: name
+        descriptionFrom: description
+        select: 'CONCAT(name, '' '', surname, '' - '', email)'
+        span: auto
+        readOnly: 1
+        type: relation
+    subject:
+        label: Subject
+        span: auto
+        disabled: 1
+        readOnly: 1
+        type: text
+    user:
+        label: 'To Users'
+        nameFrom: name
+        descriptionFrom: description
+        select: 'CONCAT(name, '' '', surname, '' - '', email)'
+        span: left
+        readOnly: 1
+        type: relation
+    group:
+        label: 'To Groups'
+        nameFrom: name
+        descriptionFrom: description
+        select: 'CONCAT(name, '' - '', email)'
+        span: right
+        readOnly: 1
+        type: relation
+    body:
+        label: Message
+        size: ''
+        span: full
+        disabled: 1
+        readOnly: 1
+        type: richeditor
+    created_at:
+        label: 'Created at'
+        mode: datetime
+        span: left
+        disabled: 1
+        readOnly: 1
+        type: datepicker
+    attachments:
+        label: Attachments
+        mode: file
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        disabled: 1
+        readOnly: 0
+        type: fileupload

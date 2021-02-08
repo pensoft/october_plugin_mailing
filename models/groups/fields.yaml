@@ -1,0 +1,26 @@
+fields:
+    name:
+        label: Name
+        span: left
+        disabled: 0
+        required: 1
+        type: text
+    email:
+        label: Email
+        span: right
+        type: text
+    type:
+        label: Type
+        options:
+            1: Outer
+            2: Inner
+        showSearch: true
+        span: auto
+        type: dropdown
+    user:
+        label: Users
+        nameFrom: name
+        descriptionFrom: description
+        select: CONCAT(name, ' ', surname, ' - ', email)
+        span: auto
+        type: relation

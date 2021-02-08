@@ -1,0 +1,122 @@
+<form method="post" data-request="{{__SELF__}}::onSubmit" data-request-files data-request-flash >
+	<input type="hidden" name="_handler" value="onSubmit">
+	{{ form_token() }}
+	{{ form_sessionKey() }}
+<div class="row ui form" id="mails">
+	<div class="col-xs">
+		<div class="row middle-xs">
+			<div class="col-xs-12 col-sm-8">
+				<h1>
+					Compose new message
+				</h1>
+			</div>
+			<input type="hidden" name="from_user" value="{{from_user}}" />
+
+		</div>
+		<div class="row">
+			<div class="col-xs">
+				<div class="formErrors"></div>
+			</div>
+		</div>
+		<div class="row box">
+			<div class="col-xs">
+				<div class="row">
+					<div class="col-xs group-head">
+						<h3>Groups</h3>
+					</div>
+				</div>
+				<div class="row group-holder">
+
+						{% for group in groups %}
+							<div class="col-xs-12 col-sm-3">
+								<div class="inputHolder inputWithTooltip" id="group_{{ group.id }}<">
+									<label class="control control--checkbox">
+										<span>{{ group.name }}</span>
+										<input type="checkbox" value="{{ group.id }}" name="groups[]">
+									</label>
+								</div>
+							</div>
+						{% endfor %}
+
+				</div>
+			</div>
+		</div>
+		<div class="row box">
+			<div class="col-xs">
+				<div class="row">
+					<div class="col-xs group-head">
+						<h3>Individuals</h3>
+					</div>
+				</div>
+				<div class="row group-holder">
+					{% for user in individuals %}
+					<div class="col-xs-12 col-sm-3">
+						<div class="inputHolder inputWithTooltip" id="group_{{ user.id }}<">
+							<label class="control control--checkbox">
+								<span>{{ user.name }} {{ user.surname }}</span>
+								<input type="checkbox" value="{{ user.id }}" name="users[]">
+							</label>
+						</div>
+					</div>
+					{% endfor %}
+
+				</div>
+
+			</div>
+		</div>
+		<div class="row box">
+			<div class="col-xs">
+				<div class="row">
+					<div class="col-xs">
+						<div class="inputLabel">Subject</div>
+						<div class="field">
+							<input type="text" name="subject" value="" class="DPText" size="2">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs">
+						<div class="inputLabel">Message</div>
+						<div class="field">
+							
+								<textarea name="message" id="message" cols="" rows="12"></textarea>
+								<script>
+									// instance, using default configuration.
+									CKEDITOR.replace( 'message' );
+
+								</script>
+
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs">
+						<div class="inputLabel">Attachments</div>
+						<div class="field">
+							
+								<input type="file" name="attachments[]" value="" placeholder="Upload files" multiple="multiple" accept="image/*, .pdf, .doc, .docx, .ppt, .xls, xlsx, .txt" data-request="{{__SELF__}}::onFileUpload" data-request-files data-request-flash>
+
+
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs" id="attachmentsPreview"></div>
+				</div>
+				
+				<div class="row center-xs">
+					<div class="col-xs-12 col-sm-3">
+
+						<input type="submit" name="tAction" value="Send" class="btn btn-primary">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</form>
+
+{% framework extras %}
+{% scripts %}

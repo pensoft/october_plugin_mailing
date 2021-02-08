@@ -1,0 +1,18 @@
+1.0.1: First version of Mailing
+1.0.2:
+    - 'Create Groups DB Table'
+    - create_groups_table.php
+1.0.3:
+    - 'Add User Id To Groups DB Table'
+    - add_user_id_to_groups.php
+1.0.4:
+    - 'Create Groups Users DB Table'
+    - create_groups_users_table.php
+1.0.5:
+    - 'UpdateGroupsUsersTable'
+    - update_groups_users_table.php
+1.0.6:
+    - 'Created mails tables and relations to from_groups and from_users'
+    - create_mails_table.php
+    - create_mails_users_table.php
+    - create_mails_groups_table.php

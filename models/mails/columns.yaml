@@ -1,0 +1,18 @@
+columns:
+  id:
+    label: id
+    type: number
+  subject:
+    label: subject
+    type: text
+  email:
+    label: email
+    type: text
+  users:
+    label: 'To users'
+    type: partial
+    path: $/pensoft/mailing/partials/_mails_users_column.htm
+  groups:
+    label: 'To groups'
+    type: partial
+    path: $/pensoft/mailing/partials/_mails_groups_column.htm
