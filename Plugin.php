@@ -100,9 +100,7 @@ class Plugin extends PluginBase
 	 */
 	public function registerMailTemplates()
 	{
-		return [
-			'pensoft.mailing::mail.content' => 'pensoft.mailing::lang.mail.templates.content',
-		];
+
 	}
 
 	public function boot(){

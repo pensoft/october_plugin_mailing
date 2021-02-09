@@ -18,3 +18,5 @@
     - create_mails_groups_table.php
 1.0.7:
     - 'Send mail form attachments; New model Alias;'
+1.0.8:
+    - 'Removed mail template'
