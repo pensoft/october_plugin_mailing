@@ -20,3 +20,5 @@
     - 'Send mail form attachments; New model Alias;'
 1.0.8:
     - 'Removed mail template'
+1.0.9:
+    - 'Connect to alias table when update mail group'

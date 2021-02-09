@@ -66,6 +66,7 @@ class Form extends ComponentBase
 				'message' => 'required',
 				'users' => 'required_without:groups',
 				'groups' => 'required_without:users',
+				'attachments' => 'max:2000',
 			]
 		);
 
@@ -79,6 +80,20 @@ class Form extends ComponentBase
 		$messageBody = Input::get('message');
 		$fromUserId = (int)Input::get('from_user');
 		$attachments = Input::file('attachments');
+		if($attachments){
+			foreach($attachments as $file){
+				$maxFileSize = $file->getMaxFilesize();
+				$file_name = $file->getClientOriginalName();
+				$file_size = $file->getClientSize();
+				$content_type = $file->getMimeType();
+				if($file->getClientSize() > 3807119){
+					Flash::error($file_name.' is too big!');
+					return;
+				}
+
+			}
+		}
+
 
 //		// get mail data
 		$usersData = User::whereIn('id', $users)->get()->toArray();
@@ -90,29 +105,33 @@ class Form extends ComponentBase
 
 		foreach($recipients as $mailData){
 			$recipientEmail = $mailData['email'];
-			$vars = [
-				'name' => $mailData['name'] .' '. ($mailData['surname'] ?? null), // Dear, Name
-				'email' => $mailData['email'],
-			];
-			Mail::send(['raw' => $messageBody], $vars, function($message)  use ($recipientEmail, $subject, $senderData, $attachments) {
+			$recipientName = $mailData['name'].' '. ($mailData['surname'] ?? null);
+			$vars = [];
+			Mail::send(['raw' => '<div>'.$messageBody.'</div>'], $vars, function($message)  use ($recipientEmail, $recipientName, $subject, $senderData, $attachments) {
 				$message->from($senderData['email'], $senderData['name'].' '.$senderData['surname']);
-				$message->to($recipientEmail);
+				$message->to($recipientEmail, $recipientName);
 				$message->subject($subject);
 				$filesSize = 0;
-				foreach($attachments as $file){
-					$maxFileSize = $file->getMaxFilesize();
-					$file_name = $file->getClientOriginalName();
-					$file_size = $file->getClientSize();
-					$content_type = $file->getMimeType();
-					$filesSize += $file_size;
+				if($attachments) {
+					foreach ($attachments as $file) {
+						$maxFileSize = $file->getMaxFilesize();
+						$file_name = $file->getClientOriginalName();
+						$file_size = $file->getClientSize();
+						$content_type = $file->getMimeType();
+						$filesSize += $file_size;
+						if ($file->getClientSize() > 3807119) {
+							return Flash::error($file_name . ' is too big!');
+							continue;
+						}
 
-					$message->attach($file->getRealPath(), ['as' => $file_name, 'mime' => $content_type]);
+						$message->attach($file->getRealPath(), ['as' => $file_name, 'mime' => $content_type]);
+					}
 				}
-//				dd($maxFileSize, $filesSize);
 			});
 
 			if (count(Mail::failures()) > 0){
-				return Flash::error('Mail not sent');
+				Flash::error('Mail not sent');
+				return;
 			}
 		}
 
