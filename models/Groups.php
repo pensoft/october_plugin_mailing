@@ -1,5 +1,6 @@
 <?php namespace Pensoft\Mailing\Models;
 
+use Illuminate\Support\Facades\DB;
 use Model;
 
 /**
@@ -75,4 +76,28 @@ class Groups extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+	public function beforeSave(){
+        $alias = new Alias();
+
+
+//		array:7 [
+//			"id" => 6
+//			  "name" => "WP2"
+//			  "email" => "WP2@pensoft.net"
+//			  "created_at" => "2021-02-04 12:15:32"
+//			  "updated_at" => "2021-02-04 12:15:32"
+//			  "type" => "1"
+//			  "user_id" => null
+//			]
+		$lGroupData = $this->attributes;
+		dd($lGroupData['email']);
+		//SELECT * FROM EditEmailGroup(\'' . $lGroupData['email'] . '\', \'' . q(trim($lGroupData['groupmembers'])) . '\', \'' . $lGroupDomain . '\',  \'' . q(trim($lGroupData['groupmoderators'])) . '\')
+
+		// $data = Db::connection('pgsql_vmail')->select('SELECT * from alias');
+//		$pdo = Db::connection()->getPdo();
+		// dd($data); die;
+		 $data = DB::connection('vmail')->select('SELECT * FROM EditEmailGroup(\'' . $lGroupData['email'] . '\', \'' . q(trim($lGroupData['groupmembers'])) . '\', \'' . $lGroupDomain . '\',  \'' . q(trim($lGroupData['groupmoderators'])) . '\')');
+		 dd($data); die;
+	}
 }

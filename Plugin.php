@@ -3,7 +3,6 @@
 use Backend;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;
-
 /**
  * Mailing Plugin Information File
  */

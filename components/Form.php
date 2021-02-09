@@ -13,6 +13,7 @@ use System\Models\File;
 use ValidationException;
 use System\Classes\MediaLibrary;
 use Auth;
+use Illuminate\Support\Facades\Mail;
 
 
 class Form extends ComponentBase
@@ -72,13 +73,56 @@ class Form extends ComponentBase
     		throw new ValidationException($validator);
 		}
 
-    	$mail = new Mails();
-		$mail->subject = Input::get('subject');
-		$mail->user = Input::get('users');
-		$mail->group = Input::get('groups');
-		$mail->from_user = (int)Input::get('from_user');
-		$mail->body = Input::get('message');
-		$mail->attachments = Input::file('attachments');
+		$users = Input::get('users') ?: [];
+		$groups = Input::get('groups') ?: [];
+		$subject = Input::get('subject');
+		$messageBody = Input::get('message');
+		$fromUserId = (int)Input::get('from_user');
+		$attachments = Input::file('attachments');
+
+//		// get mail data
+		$usersData = User::whereIn('id', $users)->get()->toArray();
+		$groupsData = Groups::whereIn('id', $groups)->get()->toArray();
+
+		$senderData = User::where('id', $fromUserId)->first()->toArray();
+
+		$recipients = array_merge($usersData, $groupsData);
+
+		foreach($recipients as $mailData){
+			$recipientEmail = $mailData['email'];
+			$vars = [
+				'name' => $mailData['name'] .' '. ($mailData['surname'] ?? null), // Dear, Name
+				'email' => $mailData['email'],
+			];
+			Mail::send(['raw' => $messageBody], $vars, function($message)  use ($recipientEmail, $subject, $senderData, $attachments) {
+				$message->from($senderData['email'], $senderData['name'].' '.$senderData['surname']);
+				$message->to($recipientEmail);
+				$message->subject($subject);
+				$filesSize = 0;
+				foreach($attachments as $file){
+					$maxFileSize = $file->getMaxFilesize();
+					$file_name = $file->getClientOriginalName();
+					$file_size = $file->getClientSize();
+					$content_type = $file->getMimeType();
+					$filesSize += $file_size;
+
+					$message->attach($file->getRealPath(), ['as' => $file_name, 'mime' => $content_type]);
+				}
+//				dd($maxFileSize, $filesSize);
+			});
+
+			if (count(Mail::failures()) > 0){
+				return Flash::error('Mail not sent');
+			}
+		}
+
+		$mail = new Mails();
+		$mail->subject = $subject;
+		$mail->user = $users;
+		$mail->group = $groups;
+		$mail->from_user = $fromUserId;
+		$mail->body = $messageBody;
+		$mail->attachments = $attachments;
 
 		$mail->save();
 

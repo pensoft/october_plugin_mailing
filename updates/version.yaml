@@ -16,3 +16,5 @@
     - create_mails_table.php
     - create_mails_users_table.php
     - create_mails_groups_table.php
+1.0.7:
+    - 'Send mail form attachments; New model Alias;'
