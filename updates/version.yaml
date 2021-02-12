@@ -22,3 +22,8 @@
     - 'Removed mail template'
 1.0.9:
     - 'Connect to alias table when update mail group'
+1.1.0:
+    - 'Add GroupId To Users Plugin'
+1.1.1:
+    - 'Add hack to trigget onsave event'
+    - add_trigger_user_change_to_users.php

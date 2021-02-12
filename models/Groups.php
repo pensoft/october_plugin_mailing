@@ -81,7 +81,7 @@ class Groups extends Model
 	public function afterSave(){
         $alias = new Alias();
 
-		$users = User::where('is_activated', true)->get()->toArray();
+		$users = User::get()->toArray();
 		$groupModerators = 'noreply@showcase-project.eu, root@psweb.pensoft.net, messaging@pensoft.net';
 		foreach ($users as $user){
 			$groupModerators .= ', ' . $user['email'];
@@ -90,12 +90,12 @@ class Groups extends Model
 		$lGroupData = $this->attributes;
 
 		$group = Groups::find($lGroupData['id']);
-		$groupMemnersArr = [];
+		$groupMembersArr = [];
 		foreach ($group->user as $user) {
-			$groupMemnersArr[] = $user->attributes['email'];
+			$groupMembersArr[] = $user->attributes['email'];
 		}
 
-		$groupMembers = implode($groupMemnersArr, ', ');
+		$groupMembers = implode($groupMembersArr, ', ');
 		$groupEmail = $lGroupData['email'];
 		$groupDomain = explode('@', $groupEmail)[1];
 
