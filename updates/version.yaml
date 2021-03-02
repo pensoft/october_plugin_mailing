@@ -31,3 +31,5 @@
     - 'Trim the recipient mail when sending'
 1.1.3:
     - 'Test mail sending'
+1.1.4:
+    - 'Revert the test code'

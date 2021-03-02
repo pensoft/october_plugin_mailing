@@ -108,10 +108,8 @@ class Form extends ComponentBase
 			$recipientName = $mailData['name'].' '. ($mailData['surname'] ?? null);
 			$vars = [];
 			Mail::send(['raw' => '<div>'.$messageBody.'</div>'], $vars, function($message)  use ($recipientEmail, $recipientName, $subject, $senderData, $attachments) {
-//				$message->from($senderData['email'], $senderData['name'].' '.$senderData['surname']);
-//				$message->to($recipientEmail, $recipientName);
-				$message->from('noreplay@pensoft.net');
-				$message->to('k.kaleva@pensoft.net');
+				$message->from($senderData['email'], $senderData['name'].' '.$senderData['surname']);
+				$message->to($recipientEmail, $recipientName);
 				$message->subject($subject);
 				$filesSize = 0;
 				if($attachments) {
