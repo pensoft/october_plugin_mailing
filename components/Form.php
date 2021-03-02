@@ -104,7 +104,7 @@ class Form extends ComponentBase
 		$recipients = array_merge($usersData, $groupsData);
 
 		foreach($recipients as $mailData){
-			$recipientEmail = $mailData['email'];
+			$recipientEmail = trim($mailData['email']);
 			$recipientName = $mailData['name'].' '. ($mailData['surname'] ?? null);
 			$vars = [];
 			Mail::send(['raw' => '<div>'.$messageBody.'</div>'], $vars, function($message)  use ($recipientEmail, $recipientName, $subject, $senderData, $attachments) {
