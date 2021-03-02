@@ -39,3 +39,5 @@
     - 'Test with dynamic sender without name'
 1.1.7:
     - 'Test with static sender'
+1.1.8:
+    - 'Test with static sender noreply'
