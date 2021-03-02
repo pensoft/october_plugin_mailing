@@ -35,3 +35,5 @@
     - 'Revert the test code'
 1.1.5:
     - 'Test with static sender'
+1.1.6:
+    - 'Test with dynamic sender without name'
