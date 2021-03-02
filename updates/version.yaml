@@ -33,3 +33,5 @@
     - 'Test mail sending'
 1.1.4:
     - 'Revert the test code'
+1.1.5:
+    - 'Test with static sender'
