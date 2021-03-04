@@ -100,6 +100,7 @@ class Form extends ComponentBase
 		$groupsData = Groups::whereIn('id', $groups)->get()->toArray();
 
 		$senderData = User::where('id', $fromUserId)->first()->toArray();
+
 		$recipients = array_merge($usersData, $groupsData);
 
 		foreach($recipients as $mailData){
@@ -107,7 +108,8 @@ class Form extends ComponentBase
 			$recipientName = $mailData['name'].' '. ($mailData['surname'] ?? null);
 			$vars = [];
 			Mail::send(['raw' => '<div>'.$messageBody.'</div>'], $vars, function($message)  use ($recipientEmail, $recipientName, $subject, $senderData, $attachments) {
-				$message->from('noreply@showcase-project.eu');
+				$message->from('noreply@showcase-project.eu', $senderData['name'].' '.$senderData['surname']);
+				$message->replyTo($senderData['email'], $senderData['name'].' '.$senderData['surname']);
 				$message->to($recipientEmail, $recipientName);
 				$message->subject($subject);
 				$filesSize = 0;
