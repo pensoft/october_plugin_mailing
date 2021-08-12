@@ -43,3 +43,5 @@
     - 'Test with static sender noreply'
 1.1.9:
     - 'Added replyTo'
+1.1.10:
+    - 'Dynamic sender email, e.g. noreply@domain.name'

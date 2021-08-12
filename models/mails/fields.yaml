@@ -31,8 +31,8 @@ fields:
         type: relation
     body:
         label: Message
-        size: ''
-        span: full
+        size: huge
+        span: auto
         disabled: 1
         readOnly: 1
         type: richeditor

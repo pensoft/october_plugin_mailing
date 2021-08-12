@@ -1,7 +1,8 @@
 <?php namespace Pensoft\Mailing\Components;
 
 use Cms\Classes\ComponentBase;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Input as FormInput;
+use Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use October\Rain\Support\Facades\Flash;
@@ -14,6 +15,7 @@ use ValidationException;
 use System\Classes\MediaLibrary;
 use Auth;
 use Illuminate\Support\Facades\Mail;
+use System\Models\MailSetting;
 
 
 class Form extends ComponentBase
@@ -55,6 +57,7 @@ class Form extends ComponentBase
 	}
 
 	public function onSubmit(){
+		$settings = MailSetting::instance();
 		$user = Auth::getUser();
 
 		if(!$user->id){
@@ -107,8 +110,8 @@ class Form extends ComponentBase
 			$recipientEmail = trim($mailData['email']);
 			$recipientName = $mailData['name'].' '. ($mailData['surname'] ?? null);
 			$vars = [];
-			Mail::send(['raw' => '<div>'.$messageBody.'</div>'], $vars, function($message)  use ($recipientEmail, $recipientName, $subject, $senderData, $attachments) {
-				$message->from('noreply@showcase-project.eu', $senderData['name'].' '.$senderData['surname']);
+			Mail::send(['raw' => '<div>'.$messageBody.'</div>'], $vars, function($message)  use ($recipientEmail, $recipientName, $subject, $senderData, $attachments, $settings) {
+				$message->from($settings->sender_email, $senderData['name'].' '.$senderData['surname']);
 				$message->replyTo($senderData['email'], $senderData['name'].' '.$senderData['surname']);
 				$message->to($recipientEmail, $recipientName);
 				$message->subject($subject);

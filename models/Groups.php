@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use Model;
 use RainLab\User\Models\User;
+use System\Models\MailSetting;
 
 /**
  * Groups Model
@@ -80,9 +81,10 @@ class Groups extends Model
 
 	public function afterSave(){
         $alias = new Alias();
+		$settings = MailSetting::instance();
 
 		$users = User::get()->toArray();
-		$groupModerators = 'noreply@showcase-project.eu, root@psweb.pensoft.net, messaging@pensoft.net';
+		$groupModerators = $settings->sender_email . ', root@psweb.pensoft.net, messaging@pensoft.net';
 		foreach ($users as $user){
 			$groupModerators .= ', ' . $user['email'];
 		}
@@ -96,7 +98,7 @@ class Groups extends Model
 		}
 
 		$groupMembers = implode($groupMembersArr, ', ');
-		$groupEmail = $lGroupData['email'];
+		$groupEmail = strtolower($lGroupData['email']);
 		$groupDomain = explode('@', $groupEmail)[1];
 
 		DB::connection('vmail')->select('SELECT * FROM EditEmailGroup(\'' . $groupEmail . '\', \'' . trim($groupMembers) . '\', \'' . $groupDomain . '\',  \'' . trim($groupModerators) . '\')');

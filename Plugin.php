@@ -152,7 +152,7 @@ class Plugin extends PluginBase
 				// remove user from all groups before adding to the selected
 				$pensoftMailingGroups = Groups::get();
 				foreach ($pensoftMailingGroups as $pensoftMailingGroup){
-					$PensoftGroupEmail = $pensoftMailingGroup->email;
+					$PensoftGroupEmail = strtolower($pensoftMailingGroup->email);
 					$PensoftGroupDomain = explode('@', $PensoftGroupEmail)[1];
 					$groupUsersArr = $pensoftMailingGroup->user->toArray();
 					$arr = [];
@@ -175,7 +175,7 @@ class Plugin extends PluginBase
 						$groupMembersArr[] = $user->attributes['email'];
 					}
 					$groupMembers = implode($groupMembersArr, ', ');
-					$groupEmail = $lGroupData['email'];
+					$groupEmail = strtolower($lGroupData['email']);
 					$groupDomain = explode('@', $groupEmail)[1];
 					DB::connection('vmail')->select('SELECT * FROM EditEmailGroup(\'' . $groupEmail . '\', \'' . trim($groupMembers) . '\', \'' . $groupDomain . '\',  \'' . trim($groupModerators) . '\')');
 
