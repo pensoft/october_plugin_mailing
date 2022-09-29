@@ -52,7 +52,7 @@ class Form extends ComponentBase
 
 	public function individuals()
 	{
-		$users = User::where('is_activated', true)->get();
+		$users = User::where('is_activated', true)->orderBy('name', 'asc')->orderBy('surname', 'asc')->get();
 		return $users;
 	}
 
