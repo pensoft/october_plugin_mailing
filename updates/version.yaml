@@ -49,3 +49,5 @@
     - 'order individuals list by name'
 1.1.12:
     - 'order groups list'
+1.1.13:
+    - 'Checkboxes flexboxgrid'
