@@ -47,7 +47,7 @@ class Form extends ComponentBase
 
 	public function groups()
 	{
-		return Groups::where('type', 1)->get();
+		return Groups::where('type', 1)->orderByRAW('LENGTH(name) ASC')->orderBy('name', 'ASC')->get();
 	}
 
 	public function individuals()

@@ -47,3 +47,5 @@
     - 'Dynamic sender email, e.g. noreply@domain.name'
 1.1.11:
     - 'order individuals list by name'
+1.1.12:
+    - 'order groups list'
