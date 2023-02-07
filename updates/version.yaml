@@ -58,3 +58,5 @@
     - builder_table_update_pensoft_mailing_groups.php
 1.1.16:
     - 'implode glue fix'
+1.1.17:
+    - 'implode glue fix'

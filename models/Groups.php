@@ -97,7 +97,7 @@ class Groups extends Model
 			$groupMembersArr[] = $user->attributes['email'];
 		}
 
-		$groupMembers = implode($groupMembersArr, ', ');
+		$groupMembers = implode( ', ', $groupMembersArr);
 		$groupEmail = strtolower($lGroupData['email']);
 		$groupDomain = explode('@', $groupEmail)[1];
 
