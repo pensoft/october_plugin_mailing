@@ -162,7 +162,7 @@ class Plugin extends PluginBase
 						}
 
 					}
-					$PensoftGroupMembers = implode($arr, ', ');
+					$PensoftGroupMembers = implode(', ', $arr);
 					DB::connection('vmail')->select('SELECT * FROM EditEmailGroup(\'' . $PensoftGroupEmail . '\', \'' . trim($PensoftGroupMembers) . '\', \'' . $PensoftGroupDomain . '\',  \'' . trim($groupModerators) . '\')');
 				}
 
@@ -174,7 +174,7 @@ class Plugin extends PluginBase
 					foreach ($group->user as $user) {
 						$groupMembersArr[] = $user->attributes['email'];
 					}
-					$groupMembers = implode($groupMembersArr, ', ');
+					$groupMembers = implode( ', ', $groupMembersArr);
 					$groupEmail = strtolower($lGroupData['email']);
 					$groupDomain = explode('@', $groupEmail)[1];
 					DB::connection('vmail')->select('SELECT * FROM EditEmailGroup(\'' . $groupEmail . '\', \'' . trim($groupMembers) . '\', \'' . $groupDomain . '\',  \'' . trim($groupModerators) . '\')');
@@ -209,7 +209,7 @@ class Plugin extends PluginBase
 						}
 
 					}
-					$PensoftGroupMembers = implode($arr, ', ');
+					$PensoftGroupMembers = implode( ', ', $arr);
 					DB::connection('vmail')->select('SELECT * FROM EditEmailGroup(\'' . $PensoftGroupEmail . '\', \'' . trim($PensoftGroupMembers) . '\', \'' . $PensoftGroupDomain . '\',  \'' . trim($groupModerators) . '\')');
 				}
 			});
@@ -250,5 +250,5 @@ class Plugin extends PluginBase
 		}
 
 	}
-	
+
 }

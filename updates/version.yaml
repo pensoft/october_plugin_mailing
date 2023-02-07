@@ -45,3 +45,5 @@
     - 'Added replyTo'
 1.1.10:
     - 'Dynamic sender email, e.g. noreply@domain.name'
+1.1.11:
+    - 'implode glue fix'
