@@ -1,4 +1,4 @@
-1.0.1: First version of Mailing
+1.0.1: 'First version of Mailing'
 1.0.2:
     - 'Create Groups DB Table'
     - create_groups_table.php
@@ -9,7 +9,7 @@
     - 'Create Groups Users DB Table'
     - create_groups_users_table.php
 1.0.5:
-    - 'UpdateGroupsUsersTable'
+    - UpdateGroupsUsersTable
     - update_groups_users_table.php
 1.0.6:
     - 'Created mails tables and relations to from_groups and from_users'
@@ -46,4 +46,15 @@
 1.1.10:
     - 'Dynamic sender email, e.g. noreply@domain.name'
 1.1.11:
+    - 'order individuals list by name'
+1.1.12:
+    - 'order groups list'
+1.1.13:
+    - 'Checkboxes flexboxgrid'
+1.1.14:
+    - 'Mailing unuque emails option'
+1.1.15:
+    - 'Updated table pensoft_mailing_groups'
+    - builder_table_update_pensoft_mailing_groups.php
+1.1.16:
     - 'implode glue fix'

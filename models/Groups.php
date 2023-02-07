@@ -1,5 +1,6 @@
 <?php namespace Pensoft\Mailing\Models;
 
+use Backend\Facades\BackendAuth;
 use Illuminate\Support\Facades\DB;
 use Model;
 use RainLab\User\Models\User;
@@ -80,7 +81,6 @@ class Groups extends Model
     public $attachMany = [];
 
 	public function afterSave(){
-        $alias = new Alias();
 		$settings = MailSetting::instance();
 
 		$users = User::get()->toArray();
@@ -102,5 +102,22 @@ class Groups extends Model
 		$groupDomain = explode('@', $groupEmail)[1];
 
 		DB::connection('vmail')->select('SELECT * FROM EditEmailGroup(\'' . $groupEmail . '\', \'' . trim($groupMembers) . '\', \'' . $groupDomain . '\',  \'' . trim($groupModerators) . '\')');
+
+        $replaceFrom = $this->replace_from;
+        $replaceTo = $this->replace_to;
+        $nameAppend = $this->name_append;
+        $addReplyTo = $this->add_reply_to;
+
+        DB::connection('vmail')->select('SELECT * FROM savereplaceoptions(\'' . $groupEmail . '\', \'' . trim($replaceFrom) . '\', \'' . trim($replaceTo) . '\', \'' . trim($nameAppend) . '\', \'' . trim($addReplyTo) . '\', 1)');
 	}
+
+    public function filterFields($fields, $context = null){
+        $user = BackendAuth::getUser();
+        if(!$user->is_superuser){
+            $fields->replace_from->disabled = true;
+            $fields->replace_to->disabled = true;
+            $fields->name_append->disabled = true;
+            $fields->add_reply_to->disabled = true;
+        }
+    }
 }

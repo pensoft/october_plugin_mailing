@@ -18,4 +18,15 @@
         data-stripe-load-indicator>
         Delete selected
     </button>
+
+    <?php if($this->user->is_superuser): ?>
+    <button
+        class="btn btn-default"
+        data-request="onSync"
+        data-request-confirm="Are you sure you want to sync the mails with domain <?= Cms\Classes\Theme::getActiveTheme()->site_domain ?> ?"
+        data-trigger-action="enable"
+        data-stripe-load-indicator>
+        Sync
+    </button>
+    <?php endif; ?>
 </div>

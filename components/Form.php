@@ -30,7 +30,13 @@ class Form extends ComponentBase
 
     public function defineProperties()
     {
-        return [];
+        return [
+            'unique_emails' => [
+                'title' => 'Unique emails',
+                'type' => 'checkbox',
+                'default' => false,
+            ],
+        ];
     }
 
 	public function onRun(){
@@ -47,12 +53,12 @@ class Form extends ComponentBase
 
 	public function groups()
 	{
-		return Groups::where('type', 1)->get();
+		return Groups::where('type', 1)->orderByRAW('LENGTH(name) ASC')->orderBy('name', 'ASC')->get();
 	}
 
 	public function individuals()
 	{
-		$users = User::where('is_activated', true)->get();
+		$users = User::where('is_activated', true)->orderBy('name', 'asc')->orderBy('surname', 'asc')->get();
 		return $users;
 	}
 
@@ -97,14 +103,36 @@ class Form extends ComponentBase
 			}
 		}
 
-
 //		// get mail data
 		$usersData = User::whereIn('id', $users)->get()->toArray();
-		$groupsData = Groups::whereIn('id', $groups)->get()->toArray();
+
+		if($this->property('unique_emails')){
+            $groupsData = Groups::join('pensoft_mailing_groups_users', 'pensoft_mailing_groups_users.groups_id', '=', 'pensoft_mailing_groups.id')
+                ->join('users', 'pensoft_mailing_groups_users.user_id', '=', 'users.id')
+                ->whereIn('pensoft_mailing_groups.id', $groups)
+                ->get()->toArray();
+        }else{
+            $groupsData = Groups::whereIn('id', $groups)->get()->toArray();
+        }
 
 		$senderData = User::where('id', $fromUserId)->first()->toArray();
 
 		$recipients = array_merge($usersData, $groupsData);
+
+        if($this->property('unique_emails')) {
+            $resArray = [];
+            foreach ($recipients as $val) {
+                if (empty($resArray)) {
+                    array_push($resArray, $val);
+                } else {
+                    $value = array_column($resArray, 'email');
+                    if (!in_array($val['email'], $value)) {
+                        array_push($resArray, $val);
+                    }
+                }
+            }
+            $recipients = $resArray;
+        }
 
 		foreach($recipients as $mailData){
 			$recipientEmail = trim($mailData['email']);
