@@ -60,3 +60,5 @@
     - 'implode glue fix'
 1.1.17:
     - 'implode glue fix'
+1.1.18:
+    - 'add via sender_name in the reply to'
