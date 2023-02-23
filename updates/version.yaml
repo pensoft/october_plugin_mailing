@@ -62,3 +62,5 @@
     - 'implode glue fix'
 1.1.18:
     - 'add via sender_name in the reply to'
+1.1.19:
+    - 'Added custom mali header'

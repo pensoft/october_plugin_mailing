@@ -141,6 +141,7 @@ class Form extends ComponentBase
 			Mail::send(['raw' => '<div>'.$messageBody.'</div>'], $vars, function($message)  use ($recipientEmail, $recipientName, $subject, $senderData, $attachments, $settings) {
 				$message->from($settings->sender_email, $senderData['name'].' '.$senderData['surname']. ' via ' . $settings->sender_name);
 				$message->replyTo($senderData['email'], $senderData['name'].' '.$senderData['surname']);
+                $message->getHeaders()->addTextHeader('X-Pensoft-Protected-Headers', 'Reply-To');
 				$message->to($recipientEmail, $recipientName);
 				$message->subject($subject);
 				$filesSize = 0;
