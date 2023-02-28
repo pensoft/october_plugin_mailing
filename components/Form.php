@@ -53,7 +53,11 @@ class Form extends ComponentBase
 
 	public function groups()
 	{
-		return Groups::where('type', 1)->orderByRAW('LENGTH(name) ASC')->orderBy('name', 'ASC')->get();
+        $groups =  Groups::where('type', 1)->where('name', 'not ilike', 'test%')->orderByRAW('LENGTH(name) ASC')->orderBy('name', 'ASC')->get();
+        $testGroups =  Groups::where('type', 1)->where('name', 'ilike', 'test%')->orderByRAW('LENGTH(name) ASC')->orderBy('name', 'ASC')->get();
+        $allGroups = $groups->merge($testGroups); // add test groups at the end of the list
+
+        return $allGroups;
 	}
 
 	public function individuals()
