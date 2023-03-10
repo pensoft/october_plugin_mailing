@@ -1,6 +1,6 @@
 <?php namespace Pensoft\Mailing\Models;
 
-use Backend\Facades\BackendAuth;
+use BackendAuth;
 use Illuminate\Support\Facades\DB;
 use Model;
 use RainLab\User\Models\User;
@@ -61,6 +61,17 @@ class Groups extends Model
         'updated_at'
     ];
 
+    // Add  for revisions limit
+    public $revisionableLimit = 200;
+
+    // Add for revisions on particular field
+    protected $revisionable = ["id", "email", "name", "user_id", "type", "replace_from", "replace_to", "add_reply_to", "name_append"];
+
+    // Add  below relationship with Revision model
+    public $morphMany = [
+        'revision_history' => ['System\Models\Revision', 'name' => 'revisionable']
+    ];
+
     /**
      * @var array Relations
      */
@@ -76,7 +87,6 @@ class Groups extends Model
 	];
     public $morphTo = [];
     public $morphOne = [];
-    public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
 
@@ -119,5 +129,16 @@ class Groups extends Model
             $fields->name_append->disabled = true;
             $fields->add_reply_to->disabled = true;
         }
+    }
+
+    // Add below function use for get current user details
+    public function diff()
+    {
+        $history = $this->revision_history;
+    }
+
+    public function getRevisionableUser()
+    {
+        return BackendAuth::getUser()->id;
     }
 }

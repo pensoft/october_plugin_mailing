@@ -12,3 +12,9 @@ columns:
       label: users
       type: partial
       path: $/pensoft/mailing/partials/_users_column.htm
+  revisions:
+      type: partial
+      path: ~/plugins/pensoft/media/partials/_revision.htm
+      searchable: false
+      sortable: false
+      valueFrom: id
