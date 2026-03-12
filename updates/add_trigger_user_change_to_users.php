@@ -7,7 +7,7 @@ class AddTriggerUserChangeToUsers extends Migration
 {
 	public function up()
 	{
-		if (!Schema::hasColumn('users', 'trigger_backend_save')) {
+		if (Schema::hasTable('users') && !Schema::hasColumn('users', 'trigger_backend_save')) {
 			Schema::table('users', function ($table) {
 				$table->smallInteger('trigger_backend_save')->default(0);;
 			});
@@ -23,3 +23,4 @@ class AddTriggerUserChangeToUsers extends Migration
 		}
 	}
 }
+
