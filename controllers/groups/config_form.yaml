@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Group
+
+# Model Form Field configuration
+form: $/pensoft/mailing/models/groups/fields.yaml
+
+# Model Class name
+modelClass: Pensoft\Mailing\Models\Groups
+
+# Default redirect location
+defaultRedirect: pensoft/mailing/groups
+
+# Create page
+create:
+    title: Create Group
+    redirect: pensoft/mailing/groups/update/:id
+    redirectClose: pensoft/mailing/groups
+
+# Update page
+update:
+    title: Edit Group
+    redirect: pensoft/mailing/groups
+    redirectClose: pensoft/mailing/groups
+
+# Preview page
+preview:
+    title: Preview Group

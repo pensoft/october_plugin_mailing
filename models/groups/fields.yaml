@@ -1,0 +1,60 @@
+fields:
+    name:
+        label: Name
+        span: left
+        disabled: 0
+        required: 1
+        type: text
+    email:
+        label: Email
+        span: right
+        type: text
+    type:
+        label: Type
+        options:
+            1: Outer
+            2: Inner
+        showSearch: true
+        span: auto
+        type: dropdown
+    user:
+        label: Users
+        nameFrom: name
+        descriptionFrom: description
+        select: CONCAT(name, ' ', surname, ' - ', email)
+        span: auto
+        type: relation
+tabs:
+    fields:
+        replace_from:
+            label: 'Replace from'
+            mode: string
+            separator: comma
+            customTags: true
+            useKey: false
+            span: auto
+            type: taglist
+            commentAbove: 'Before edit contact Teodor Georgiev!'
+            tab: 'Replace options'
+        replace_to:
+            label: 'Replace to'
+            mode: string
+            separator: comma
+            customTags: true
+            useKey: false
+            span: auto
+            type: taglist
+            commentAbove: 'Before edit contact Teodor Georgiev!'
+            tab: 'Replace options'
+        name_append:
+            label: 'Name append'
+            span: auto
+            type: text
+            commentAbove: 'Before edit contact Teodor Georgiev!'
+            tab: 'Replace options'
+        add_reply_to:
+            label: 'Add reply to'
+            span: auto
+            type: text
+            commentAbove: 'Before edit contact Teodor Georgiev!'
+            tab: 'Replace options'

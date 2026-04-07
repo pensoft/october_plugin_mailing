@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Mail
+
+# Model Form Field configuration
+form: $/pensoft/mailing/models/mails/fields.yaml
+
+# Model Class name
+modelClass: Pensoft\Mailing\Models\Mails
+
+# Default redirect location
+defaultRedirect: pensoft/mailing/mails
+
+# Create page
+create:
+    title: Create Mail
+    redirect: pensoft/mailing/mails/update/:id
+    redirectClose: pensoft/mailing/mails
+
+# Update page
+update:
+    title: Edit Mail
+    redirect: pensoft/mailing/mails
+    redirectClose: pensoft/mailing/mails
+
+# Preview page
+preview:
+    title: Preview Mail

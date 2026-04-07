@@ -1,0 +1,14 @@
+columns:
+  id:
+      label: id
+      type: number
+  name:
+      label: name
+      type: text
+  email:
+      label: email
+      type: text
+  users:
+      label: users
+      type: partial
+      path: $/pensoft/mailing/partials/_users_column.htm
